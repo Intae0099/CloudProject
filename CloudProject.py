@@ -88,6 +88,15 @@ def reboot_ins(ec2):
         print("Insert Again")
     return
 
+
+def list_img(ec2):
+    print("Listing images....")
+    images = ec2.describe_images(Owners=['self'])
+    if(images['Images']):
+        for image in images['Images']:
+            print("[ImageID] " + image['ImageId'] + ", [Name] " + image['Name'] + ", [Owner]" + image['OwnerId'])
+    return
+
 ACCESS_KEY = input("AWS_ACCESS_KEY_ID : ")
 SECRET_KEY = input("AWS_SECRET_ACCESS_KEY_ID : ")
 
