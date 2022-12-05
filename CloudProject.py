@@ -7,6 +7,7 @@ def menu():
     print("5. stop instance \t6. create instance")
     print("7. reboot instance \t8. list images")
     print("9. credits instance 10. list tags")
+    print("11. create tags \t12. delete tags")
     print("\t\t\t\t\t99. quit")
     print("------------------------------------------------------------")
     menu_num = input("Enter an integer : ")
@@ -41,9 +42,7 @@ def start_ins(ec2):
         print("Successfully started instance " + ins_id)
     else:
         print("Insert Again")
-
     return
-
 
 def avail_region(ec2):
     print("Available regions....")
@@ -51,9 +50,7 @@ def avail_region(ec2):
     for region in regions['Regions']:
         print("[region] " + region['RegionName'].rjust(20, " ")
               + ",  [endpoint] " + region['Endpoint'])
-
     return
-
 
 def stop_ins(ec2):
     ins_id = input("Enter Instance id: ")
@@ -66,15 +63,12 @@ def stop_ins(ec2):
         print("Insert Again")
     return
 
-
 def create_ins(ec2):
     ami_id = input("Enter ami id: ")
     instance = ec2.run_instances(ImageId=ami_id, InstanceType='t2.micro', MaxCount=1, MinCount=1)
     instance_id = instance['Instances'][0]
     print("Successfully started EC2 instance " + instance_id['InstanceId'] + " based on AMI "+ ami_id)
-
     return
-
 
 def reboot_ins(ec2):
     ins_id = input("Enter Instance id: ")
@@ -87,7 +81,6 @@ def reboot_ins(ec2):
     else:
         print("Insert Again")
     return
-
 
 def list_img(ec2):
     print("Listing images....")
@@ -111,6 +104,16 @@ def tag_list(ec2):
     for tag in tags['Tags']:
         print("[Key] " + tag['Key'].rjust(10, " ") + ", [Value] " + tag['Value'].rjust(20, " ") + ", [Resource ID] " + tag['ResourceId'].rjust(25, " ") + ", [ResourceType] " + tag['ResourceType'].rjust(20, " "))
     
+def create_tags(ec2):
+    resource = input("Enter resource : ")
+    key = input("Enter key : ")
+    value = input("Enter value : ")
+    resource_list = []
+    resource_list.append(resource)
+    tags_dict = {'Key':key, 'Value':value}
+    tags_list = []
+    tags_list.append(tags_dict)
+    ec2.create_tags(Resources=resource_list, Tags=tags_list)    
     
 ACCESS_KEY = input("AWS_ACCESS_KEY_ID : ")
 SECRET_KEY = input("AWS_SECRET_ACCESS_KEY_ID : ")
@@ -142,6 +145,8 @@ ec2_session = boto3.Session(aws_access_key_id=ACCESS_KEY, aws_secret_access_key=
         ins_credit(ec2_client)
     if menu_num == 10:
         tag_list(ec2_client)
+    if menu_num == 11:
+        create_tags(ec2_client)
     if menu_num == 99:
         print("Quit")
         break
