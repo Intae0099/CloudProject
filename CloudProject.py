@@ -44,6 +44,16 @@ def start_ins(ec2):
 
     return
 
+
+def avail_region(ec2):
+    print("Available regions....")
+    regions = ec2.describe_regions()
+    for region in regions['Regions']:
+        print("[region] " + region['RegionName'].rjust(20, " ")
+              + ",  [endpoint] " + region['Endpoint'])
+
+    return
+
 ACCESS_KEY = input("AWS_ACCESS_KEY_ID : ")
 SECRET_KEY = input("AWS_SECRET_ACCESS_KEY_ID : ")
 
