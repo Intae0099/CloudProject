@@ -54,6 +54,18 @@ def avail_region(ec2):
 
     return
 
+
+def stop_ins(ec2):
+    ins_id = input("Enter Instance id: ")
+    ins_list = []
+    ins_list.append(ins_id)
+    if ins_id is not None:
+        ec2.stop_instances(InstanceIds=ins_list)
+        print("Successfully stop instance " + ins_id)
+    else:
+        print("Insert Again")
+    return
+
 ACCESS_KEY = input("AWS_ACCESS_KEY_ID : ")
 SECRET_KEY = input("AWS_SECRET_ACCESS_KEY_ID : ")
 
