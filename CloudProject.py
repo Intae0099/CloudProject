@@ -12,6 +12,15 @@ def menu():
     menu_num = input("Enter an integer : ")
     return menu_num
   
+def list_ins(ec2):
+    print("Listing instances....")
+    for instance in ec2.instances.all():
+        if instance:
+            print("[id] " + instance.id + ", [AMI] "+ instance.image_id +", [type] "
+                  + instance.instance_type + ", [state] " + instance.state['Name']
+                  + ", [monitoring state] " + instance.monitoring['State'])
+    return    
+    
 ACCESS_KEY = input("AWS_ACCESS_KEY_ID : ")
 SECRET_KEY = input("AWS_SECRET_ACCESS_KEY_ID : ")
 
