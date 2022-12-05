@@ -114,6 +114,12 @@ def create_tags(ec2):
     tags_list = []
     tags_list.append(tags_dict)
     ec2.create_tags(Resources=resource_list, Tags=tags_list)    
+
+def del_tags(ec2):
+    resource = input("Enter resource : ")
+    resource_list = []
+    resource_list.append(resource)
+    ec2.delete_tags(Resources=resource_list)    
     
 ACCESS_KEY = input("AWS_ACCESS_KEY_ID : ")
 SECRET_KEY = input("AWS_SECRET_ACCESS_KEY_ID : ")
@@ -147,6 +153,8 @@ ec2_session = boto3.Session(aws_access_key_id=ACCESS_KEY, aws_secret_access_key=
         tag_list(ec2_client)
     if menu_num == 11:
         create_tags(ec2_client)
+    if menu_num == 12:
+        del_tags(ec2_client)
     if menu_num == 99:
         print("Quit")
         break
