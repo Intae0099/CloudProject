@@ -8,7 +8,7 @@ def menu():
     print("7. reboot instance \t8. list images")
     print("9. credits instance 10. list tags")
     print("11. create tags \t12. delete tags")
-    print("\t\t\t\t\t99. quit")
+    print("13. send command\t99. quit")
     print("------------------------------------------------------------")
     menu_num = input("Enter an integer : ")
     return menu_num
@@ -120,6 +120,24 @@ def del_tags(ec2):
     resource_list = []
     resource_list.append(resource)
     ec2.delete_tags(Resources=resource_list)    
+
+def aws_command(ssm):
+    ins_id = input("Enter Instance id: ")
+    command = input("Enter command: ")
+    command_response = ssm.send_command(
+        InstanceIds=[ins_id],
+        DocumentName="AWS-RunShellScript",
+        Parameters={
+            'commands': [command],
+            'executionTimeout': ['3600'], },
+        TimeoutSeconds=30, )
+    command_id = command_response['Command']['CommandId']
+    time.sleep(2)
+    output = ssm.get_command_invocation(
+        CommandId=command_id,
+        InstanceId=ins_id,
+    )
+    print(output['StandardOutputContent'])    
     
 ACCESS_KEY = input("AWS_ACCESS_KEY_ID : ")
 SECRET_KEY = input("AWS_SECRET_ACCESS_KEY_ID : ")
@@ -127,7 +145,8 @@ SECRET_KEY = input("AWS_SECRET_ACCESS_KEY_ID : ")
 ec2_client = boto3.client('ec2', region_name='ap-northeast-1', aws_access_key_id=ACCESS_KEY, aws_secret_access_key=SECRET_KEY)
 ec2_resource = boto3.resource('ec2', region_name='ap-northeast-1', aws_access_key_id=ACCESS_KEY, aws_secret_access_key=SECRET_KEY)
 ec2_session = boto3.Session(aws_access_key_id=ACCESS_KEY, aws_secret_access_key=SECRET_KEY)
-  
+ssm = boto3.client('ssm', region_name="ap-northeast-1", aws_access_key_id=ACCESS_KEY, aws_secret_access_key=SECRET_KEY)
+
   while(1):
     menu_string = menu()
     menu_num = int(menu_string)
@@ -155,6 +174,8 @@ ec2_session = boto3.Session(aws_access_key_id=ACCESS_KEY, aws_secret_access_key=
         create_tags(ec2_client)
     if menu_num == 12:
         del_tags(ec2_client)
+    if menu_num == 13:
+        aws_command(ssm)
     if menu_num == 99:
         print("Quit")
         break
