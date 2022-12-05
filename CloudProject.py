@@ -7,7 +7,7 @@ def menu():
     print("3. start instance \t4. available regions")
     print("5. stop instance \t6. create instance")
     print("7. reboot instance \t8. list images")
-    print("9. credits instance 10. list tags")
+    print("9. credits instance\t10. list tags")
     print("11. create tags \t12. delete tags")
     print("13. send command\t99. quit")
     print("------------------------------------------------------------")
