@@ -20,6 +20,15 @@ def list_ins(ec2):
                   + instance.instance_type + ", [state] " + instance.state['Name']
                   + ", [monitoring state] " + instance.monitoring['State'])
     return    
+
+def avail_zone(ec2):
+    print("Available zones....")
+    zones = ec2.describe_availability_zones()
+    for zone in zones['AvailabilityZones']:
+        print("[id] " + zone['ZoneId'] + ",  [region]"
+              + zone['RegionName'].rjust(20, " ") + ",  [zone] "
+              + zone['ZoneName'].rjust(20, " "))
+    return
     
 ACCESS_KEY = input("AWS_ACCESS_KEY_ID : ")
 SECRET_KEY = input("AWS_SECRET_ACCESS_KEY_ID : ")
