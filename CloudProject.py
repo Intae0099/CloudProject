@@ -66,6 +66,15 @@ def stop_ins(ec2):
         print("Insert Again")
     return
 
+
+def create_ins(ec2):
+    ami_id = input("Enter ami id: ")
+    instance = ec2.run_instances(ImageId=ami_id, InstanceType='t2.micro', MaxCount=1, MinCount=1)
+    instance_id = instance['Instances'][0]
+    print("Successfully started EC2 instance " + instance_id['InstanceId'] + " based on AMI "+ ami_id)
+
+    return
+
 ACCESS_KEY = input("AWS_ACCESS_KEY_ID : ")
 SECRET_KEY = input("AWS_SECRET_ACCESS_KEY_ID : ")
 
