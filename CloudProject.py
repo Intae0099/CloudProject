@@ -97,6 +97,15 @@ def list_img(ec2):
             print("[ImageID] " + image['ImageId'] + ", [Name] " + image['Name'] + ", [Owner]" + image['OwnerId'])
     return
 
+
+def ins_credit(ec2):                        #Information about the credit option for CPU usage of an instance.
+    print("Instance credit ....")
+    ins_id = input("Enter Instance id: ")
+    ins_list = []
+    ins_list.append(ins_id)
+    credits = ec2.describe_instance_credit_specifications(InstanceIds=ins_list)
+    print("[ID] " + ins_id + ", [CPU Credits] " + credits['InstanceCreditSpecifications'][0]['CpuCredits'])
+
 ACCESS_KEY = input("AWS_ACCESS_KEY_ID : ")
 SECRET_KEY = input("AWS_SECRET_ACCESS_KEY_ID : ")
 
