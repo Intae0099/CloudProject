@@ -75,6 +75,19 @@ def create_ins(ec2):
 
     return
 
+
+def reboot_ins(ec2):
+    ins_id = input("Enter Instance id: ")
+    ins_list = []
+    ins_list.append(ins_id)
+    print("Rebooting ... " + ins_id)
+    if ins_id is not None:
+        ec2.reboot_instances(InstanceIds=ins_list)
+        print("Successfully rebooted instance " + ins_id)
+    else:
+        print("Insert Again")
+    return
+
 ACCESS_KEY = input("AWS_ACCESS_KEY_ID : ")
 SECRET_KEY = input("AWS_SECRET_ACCESS_KEY_ID : ")
 
