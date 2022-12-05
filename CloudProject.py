@@ -29,7 +29,21 @@ def avail_zone(ec2):
               + zone['RegionName'].rjust(20, " ") + ",  [zone] "
               + zone['ZoneName'].rjust(20, " "))
     return
-    
+
+
+def start_ins(ec2):
+    ins_id = input("Enter Instance id: ")
+    ins_list = []
+    ins_list.append(ins_id)
+    if ins_id is not None:
+        print("Starting ... " + ins_id)
+        ec2.start_instances(InstanceIds=ins_list)
+        print("Successfully started instance " + ins_id)
+    else:
+        print("Insert Again")
+
+    return
+
 ACCESS_KEY = input("AWS_ACCESS_KEY_ID : ")
 SECRET_KEY = input("AWS_SECRET_ACCESS_KEY_ID : ")
 
