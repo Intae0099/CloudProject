@@ -106,6 +106,12 @@ def ins_credit(ec2):                        #Information about the credit option
     credits = ec2.describe_instance_credit_specifications(InstanceIds=ins_list)
     print("[ID] " + ins_id + ", [CPU Credits] " + credits['InstanceCreditSpecifications'][0]['CpuCredits'])
 
+def tag_list(ec2):
+    tags = ec2.describe_tags()
+    for tag in tags['Tags']:
+        print("[Key] " + tag['Key'].rjust(10, " ") + ", [Value] " + tag['Value'].rjust(20, " ") + ", [Resource ID] " + tag['ResourceId'].rjust(25, " ") + ", [ResourceType] " + tag['ResourceType'].rjust(20, " "))
+    
+    
 ACCESS_KEY = input("AWS_ACCESS_KEY_ID : ")
 SECRET_KEY = input("AWS_SECRET_ACCESS_KEY_ID : ")
 
